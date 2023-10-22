@@ -1,4 +1,7 @@
-// scrape functions
+// this file contains scraping functions
+// searching: returns sevreral links rely on search results
+// 
+
 
 const scrapeCategory = (browser, url) => new Promise(async (resolve, reject) => {
     try {
@@ -33,7 +36,7 @@ const scrapeCategory = (browser, url) => new Promise(async (resolve, reject) => 
 })
 
 
-const scrapeSelectedPage = (browser, url) => new Promise(async(resolve, reject) => {
+const scrapeSelectedPage = (browser, url) => new Promise(async (resolve, reject) => {
     try {
         let page = await browser.newPage()
         console.log('>> Open new tab...')
@@ -51,7 +54,7 @@ const scrapeSelectedPage = (browser, url) => new Promise(async(resolve, reject) 
                 description: el.querySelector('p').innerText
             }
         })
-        
+
         scrapeData.header = headerData
 
         // get detail item link
@@ -64,25 +67,25 @@ const scrapeSelectedPage = (browser, url) => new Promise(async(resolve, reject) 
         //console.log(detailLinks)
 
 
-        const scrapeDetail = async (link) => new Promise(async(resolve, reject) => {
+        const scrapeDetail = async (link) => new Promise(async (resolve, reject) => {
             try {
                 let detailPage = await browser.newPage()
                 await detailPage.goto(link)
                 console.log('>> Visit to ' + link)
                 await detailPage.waitForSelector('#main')
-                
+
 
                 const detailData = {}
                 // scrape data
                 // get img
                 const images = await detailPage.$$eval('#left-col > article > div.post-images > div > div.swiper-wrapper > div.swiper-slide', (els) => {
                     images = els.map(el => {
-                        if(el.querySelector('img')) { 
+                        if (el.querySelector('img')) {
                             return el.querySelector('img').src // tag img
-                        } 
+                        }
                         else if (el.querySelector('iframe')) {
                             return el.querySelector('iframe').src // tag iframe
-                        } 
+                        }
                         else return el.querySelector('video > source').src // tag video
                     })
                     return images
@@ -119,7 +122,7 @@ const scrapeSelectedPage = (browser, url) => new Promise(async(resolve, reject) 
         })
 
 
-        for(let link of detailLinks){
+        for (let link of detailLinks) {
             await scrapeDetail(link)
         }
 
@@ -135,7 +138,100 @@ const scrapeSelectedPage = (browser, url) => new Promise(async(resolve, reject) 
     }
 })
 
+
+const scrapeSpecificPage = (browser, url) => new Promise(async (resolve, reject) => {
+    try {
+        let page = await browser.newPage()
+        await page.goto(url, {
+            waitUntil: 'load'
+        })
+
+        // --- code ---
+
+    } catch (error) {
+        console.log('Error in scrape specific page: ' + error)
+        reject(error)
+    }
+})
+
+
+const searching = (browser, keyword) => new Promise(async (resolve, reject) => {
+    try {
+        let page = await browser.newPage()
+        await page.goto('https://www.google.com/')
+        await page.waitForSelector('#APjFqb')
+        await page.keyboard.sendCharacter(keyword);
+        await page.keyboard.press('Enter')
+
+        await page.waitForSelector('#search')
+
+        const linkList = await page.$$eval('div.v7W49e > div.MjjYud', (els) => {
+            els.length = 8 // need a constant here
+            linkList = els.map(el => {
+                return {
+                    name: el.querySelector('div > div.N54PNb.BToiNc.cvP2Ce > div.kb0PBd.cvP2Ce.jGGQ5e > div.yuRUbf > div > span > a > h3')?.innerText,
+                    link: el.querySelector('div > div.N54PNb.BToiNc.cvP2Ce > div.kb0PBd.cvP2Ce.jGGQ5e > div.yuRUbf > div > span > a')?.href
+                }
+            })
+            return linkList
+        })
+
+        console.log(linkList)
+        await page.close()
+        resolve(linkList)
+
+    } catch (error) {
+        console.log('Error in searching: ' + error)
+        reject(error)
+    }
+})
+
+
+const downloadConfList = (browser, url) => (async () => {
+    // const client = await page.target().createCDPSession();
+    // await page.goto(url, { waitUntil: "networkidle2" });
+    // await page.waitForSelector(`#downloadLink`)
+    // await client.send('Page.setDownloadBehavior', {
+    //     behavior: 'allow',
+    //     downloadPath: downloadPath
+    // });
+    // await page.click('./')
+    // await browser.close();
+})
+
+
+const test = (browser, url) => new Promise(async (resolve, reject) => {
+    try {
+        let page = await browser.newPage()
+        await page.goto(url, {
+            waitUntil: "load"
+        })
+
+        let chk = ''
+
+        try {
+            if ((await page.waitForXPath('//*[contains(text(), "Conference Portal")]', 30000)) !== null) {
+                chk = await page.evaluate(el => el.innerText, await page.$x('//*[contains(text(), "Subscription Confirmed")]'))
+                chk = 'Success'
+            }
+
+        } catch (error) {
+            chk = 'Failed'
+        }
+        
+
+        console.log(chk)
+        await browser.close() 
+        resolve()
+
+    } catch (error) {
+        console.log('Error in test: ' + error)
+        reject(error)
+    }
+})
+
+
 module.exports = {
-    scrapeCategory,
-    scrapeSelectedPage
+    scrapeSpecificPage,
+    searching
 }

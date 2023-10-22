@@ -1,12 +1,15 @@
 const puppeteer = require('puppeteer')
 
+
 const startBrowser = async () => {
     let browser
     try {
         browser = await puppeteer.launch ({
-            headless: false, // true/ false: don't open/ open the browser ui
+            headless: true, // true - false: don't open - open the browser ui
+            defaultViewport: false,
+            executablePath: 'C:/Program Files/Google/Chrome/Application/chrome.exe',
             args: ["--disable-setuid-sandbox"],
-            'ignoreHTTPSErrors': true // skip error which is related to HTTP secure
+            'ignoreHTTPSErrors': true
         })
 
     } catch (error) {
@@ -15,5 +18,6 @@ const startBrowser = async () => {
 
     return browser
 }
+
 
 module.exports = startBrowser
