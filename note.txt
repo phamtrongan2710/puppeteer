@@ -1,0 +1,51 @@
+------ IDEA ------
+1. get and store csv file from core portal
+2. using compre csv web tool (own app ?) -> check if there are new conferences
+3. scrape the new conference ?
+4. automatic XXX
+------------------
+
+
+------ ISSUE -------
+1. get amount of jump pages
+2. reliable tag in some function
+3. 1 constant cannot use ???
+4.
+--------------------
+
+
+----- MODULE ------
+1. puppeteer
+2.
+-------------------
+
+
+----- FUNCTION ------
+1. searching: finding at least 3 source link
+2. scrapeCorePortal: get conference list 
+3. 
+----------------------
+
+
+-------- conference object ----------
+// 
+-- name: string
+-- acronym: string
+-- rank: string
+-- rating: string
+-- primaryFoR: string
+-- comment: object
+// from specific website
+-- source (link of the scraped website): string
+-- hold (online/offline): string
+-- form (???): string
+-- notificationDate: date
+-- submissionDate: date
+-- conferenceDate: date
+-- venue: string
+-- pageContent: string
+--------------------------------------
+
+
+
+

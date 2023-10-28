@@ -1,16 +1,17 @@
 const scrapers = require('./scraper')
+// const constants = require('./CONSTANTS')
 
 
 const scrapeController = async (browserInstance) => {
-    const url = 'http://portal.core.edu.au/conf-ranks/' // the website's link
+    // const url = constants.CORE_PORTAL_LINK // the website's link
     
     try {
         let browser = await browserInstance
+        await scrapers.scarpeCorePortal(browser)
         
-        // call scraping functions
+        
+        
 
-        // ----- scraping a specific page testing -----
-        const linkList = await scrapers.searching(browser, 'ACM SIGKDD Conference on Knowledge Discovery and Data Mining (KDD)')
         
 
         // --------------------------------------------
@@ -29,11 +30,13 @@ const scrapeController = async (browserInstance) => {
 
         // -----------------------------
 
+        await browser.close()
+
     } catch (error) {
         console.log('Error in scrape controller: ' + error)
     }
 
-    process.exit(0)
+    // process.exit(0)
 }
 
 
