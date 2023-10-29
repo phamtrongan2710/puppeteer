@@ -7,23 +7,23 @@
 
 
 ------ ISSUE -------
-1. get amount of jump pages
-2. reliable tag in some function
-3. 1 constant cannot use ???
-4.
+1. reliable tag 
+2. jumpage
+3. captcha
 --------------------
 
 
 ----- MODULE ------
 1. puppeteer
-2.
+2. dotenv
 -------------------
 
 
 ----- FUNCTION ------
-1. searching: finding at least 3 source link
-2. scrapeCorePortal: get conference list 
-3. 
+1. searching:
+2. scraping:
+3. scrapeCorePortal: get conference array
+4.
 ----------------------
 
 

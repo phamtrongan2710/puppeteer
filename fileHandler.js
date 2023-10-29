@@ -1,22 +1,20 @@
-const fs = require('fs')
-const { parse } = require('csv-parse')
-const constants = require('./CONSTANTS')
-
+import { createReadStream } from 'fs'
+import { parse } from 'csv-parse'
+import dotenv from 'dotenv'
+dotenv.config()
 
 var readData = []
 
-fs.createReadStream(constants.CORE_FILE_PATH)
+createReadStream(process.env.CORE_FILE_PATH)
     .pipe(parse({ delimiter: ',', from_line: 1 }))
     .on('data', function (row) {
         readData.push(row)
     })
-
     .on("end", function () {
-        console.log(readData)
-        // --- code here ---
+        console.log('Finished')
     })
-
     .on("error", function (error) {
         console.log('Error in read file: ' + error)
     })
 
+export default readData

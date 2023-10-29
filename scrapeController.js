@@ -1,19 +1,9 @@
-const scrapers = require('./scraper')
-// const constants = require('./CONSTANTS')
-
+import scrapers from './scraper.js'
 
 const scrapeController = async (browserInstance) => {
-    // const url = constants.CORE_PORTAL_LINK // the website's link
-    
     try {
         let browser = await browserInstance
         await scrapers.scarpeCorePortal(browser)
-        
-        
-        
-
-        
-
         // --------------------------------------------
 
 
@@ -29,15 +19,10 @@ const scrapeController = async (browserInstance) => {
         // await scrapers.searching(browser, 'ACIS Conference on Software Engineering Research, Management and Applications')
 
         // -----------------------------
-
         await browser.close()
-
     } catch (error) {
         console.log('Error in scrape controller: ' + error)
     }
-
-    // process.exit(0)
 }
 
-
-module.exports = scrapeController
+export default scrapeController
