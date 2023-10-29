@@ -2,6 +2,7 @@ import puppeteer from 'puppeteer-extra'
 import StealthPlugin from 'puppeteer-extra-plugin-stealth'
 puppeteer.use(StealthPlugin())
 
+
 const startBrowser = async () => {
     let browser
     try {
@@ -18,5 +19,6 @@ const startBrowser = async () => {
     }
     return browser
 }
+
 
 export default startBrowser

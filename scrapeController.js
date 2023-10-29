@@ -1,5 +1,6 @@
 import scrapers from './scraper.js'
 
+
 const scrapeController = async (browserInstance) => {
     try {
         let browser = await browserInstance
@@ -24,5 +25,6 @@ const scrapeController = async (browserInstance) => {
         console.log('Error in scrape controller: ' + error)
     }
 }
+
 
 export default scrapeController

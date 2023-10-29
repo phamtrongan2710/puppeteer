@@ -3,6 +3,7 @@ import { parse } from 'csv-parse'
 import dotenv from 'dotenv'
 dotenv.config()
 
+
 var readData = []
 
 createReadStream(process.env.CORE_FILE_PATH)
@@ -17,4 +18,5 @@ createReadStream(process.env.CORE_FILE_PATH)
         console.log('Error in read file: ' + error)
     })
 
+    
 export default readData

@@ -15,7 +15,9 @@
 
 ----- MODULE ------
 1. puppeteer
-2. dotenv
+2. user-agents
+3. puppeteer-extra-plugin-stealth
+4. random-useragent
 -------------------
 
 
